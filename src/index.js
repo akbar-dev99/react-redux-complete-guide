@@ -9,7 +9,7 @@ import App from "./App";
 import registerServiceWorker from "./registerServiceWorker";
 import { Provider } from "react-redux";
 
-const store = createStore();
+const store = createStore(reducer);
 
 const initStore = (
   <Provider store={store}>
