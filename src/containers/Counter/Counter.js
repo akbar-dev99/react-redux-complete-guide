@@ -4,6 +4,8 @@ import { connect } from "react-redux";
 import CounterControl from "../../components/CounterControl/CounterControl";
 import CounterOutput from "../../components/CounterOutput/CounterOutput";
 
+import ActionTypes from "../../store/actions";
+
 class Counter extends Component {
   state = {
     counter: 0,
@@ -62,12 +64,12 @@ class Counter extends Component {
         />
         <ul>
           {this.props.result !== [] &&
-            this.props.result.map((item, i) => {
+            this.props.listCounter.map((item, i) => {
               return (
                 <li
                   style={{ cursor: "pointer" }}
                   key={i}
-                  onClick={this.props.onDeleteResult}
+                  onClick={() => this.props.onDeleteResult(item.id)}
                 >
                   {item.value}
                 </li>
@@ -82,27 +84,22 @@ class Counter extends Component {
 const mapStateToProps = state => {
   return {
     counter: state.counter,
-    result: state.result,
+    listCounter: state.results,
   };
 };
 
 const mapDispatchToProps = dispatch => {
   return {
-    onIncrementCounter: () => dispatch({ type: "INC" }),
-    onDecrementCounter: () => dispatch({ type: "DEC" }),
+    onIncrementCounter: () => dispatch({ type: ActionTypes.INCREMENT_COUNTER }),
+    onDecrementCounter: () => dispatch({ type: ActionTypes.DECREMENT_COUNTER }),
     onAddCounter: value =>
-      dispatch({
-        type: "ADD_MORE",
-
-        value: value,
-      }),
+      dispatch({ type: ActionTypes.ADD_COUNTER, value: value }),
     onSubtractCounter: value =>
-      dispatch({
-        type: "SUBTRACT_MORE",
-        value: value,
-      }),
-    onStoreResult: () => dispatch({ type: "STORE_RESULT" }),
-    onDeleteResult: () => dispatch({ type: "DELETE_RESULT" }),
+      dispatch({ type: ActionTypes.SUBTRACT_COUNTER, value: value }),
+    onStoreResult: () => dispatch({ type: ActionTypes.STORE_RESULTS }),
+    onDeleteResult: id => {
+      return dispatch({ type: ActionTypes.DELETE_RESULT, payload: { id } });
+    },
   };
 };
 export default connect(mapStateToProps, mapDispatchToProps)(Counter);

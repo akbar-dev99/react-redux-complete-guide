@@ -1,43 +1,49 @@
+import ActionTypes from "./actions";
+
 const initialState = {
   counter: 0,
-  result: [],
+  results: [],
   idResult: 0,
 };
 
 const reducer = (state = initialState, action) => {
   switch (action.type) {
-    case "INC":
+    case ActionTypes.INCREMENT_COUNTER:
       return {
         ...state,
         counter: state.counter + 1,
       };
-    case "ADD_MORE":
+    case ActionTypes.ADD_COUNTER:
       return {
         ...state,
         counter: state.counter + action.value,
       };
-    case "DEC":
+    case ActionTypes.DECREMENT_COUNTER:
       if (state.counter > 0) {
         return { ...state, counter: state.counter - 1 };
       }
       return state;
-    case "SUBTRACT_MORE":
+    case ActionTypes.SUBTRACT_COUNTER:
       if (state.counter > action.value - 1) {
         return { ...state, counter: state.counter - action.value };
       }
       return state;
-    case "STORE_RESULT":
+    case ActionTypes.STORE_RESULTS:
       let id = state.idResult + 1;
       return {
         ...state,
         idResult: id,
-        result: state.result.concat({
+        results: state.results.concat({
           id: id,
           value: state.counter,
         }),
       };
+    case ActionTypes.DELETE_RESULT:
+      const updatedArray = state.results.filter(
+        res => res.id !== action.payload.id
+      );
+      return { ...state, results: updatedArray };
   }
-
   return state;
 };
 
