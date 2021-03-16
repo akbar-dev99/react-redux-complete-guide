@@ -29,13 +29,20 @@ export const subtract = value => ({
   value,
 });
 
-export const storeResult = value => {
-  console.log(value);
+const saveResult = value => {
   return {
     type: ActionTypes.STORE_RESULTS,
     payload: {
       result: value,
     },
+  };
+};
+
+export const storeResult = value => {
+  return dispatch => {
+    setTimeout(() => {
+      dispatch(saveResult(value));
+    }, 3000);
   };
 };
 
