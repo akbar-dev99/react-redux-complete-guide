@@ -4,14 +4,14 @@ import { connect } from "react-redux";
 import CounterControl from "../../components/CounterControl/CounterControl";
 import CounterOutput from "../../components/CounterOutput/CounterOutput";
 
-import ActionTypes, {
+import {
+  increment,
   addCounter,
   decrement,
-  deleteResult,
-  increment,
-  storeResult,
   subtract,
-} from "../../store/actions/actions";
+  deleteResult,
+  storeResult,
+} from "../../store/actions";
 
 class Counter extends Component {
   state = {
